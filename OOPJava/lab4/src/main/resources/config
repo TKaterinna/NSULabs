@@ -1,0 +1,7 @@
+maxBodyStorage = 4
+maxEngineStorage = 7
+maxAccessoryStorage = 10
+maxCarStorage = 5
+S = 10
+D = 10
+W = 2
