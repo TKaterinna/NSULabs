@@ -1,0 +1,10 @@
++ ru.nsu.testova.commands.Plus
+- ru.nsu.testova.commands.Minus
+/ ru.nsu.testova.commands.Division
+* ru.nsu.testova.commands.Multiplication
+SQRT ru.nsu.testova.commands.Sqrt
+POP ru.nsu.testova.commands.Pop
+PUSH ru.nsu.testova.commands.Push
+PRINT ru.nsu.testova.commands.Print
+DEFINE ru.nsu.testova.commands.Define
+# ru.nsu.testova.commands.Comment
