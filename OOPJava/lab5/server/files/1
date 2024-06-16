@@ -1,0 +1,48 @@
+package ru.nsu.testova;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.stage.Stage;
+import ru.nsu.testova.client.Client;
+
+public class Main extends Application {
+    @Override
+    public void start(Stage stage) {
+        Client client = new Client();
+        Platform.runLater(() -> {
+            MainWindow mainWindow = new MainWindow(client, stage);
+//            ControllerJavaFX controller = new ControllerJavaFX(mainWindow, model);
+//            controller.startGame();
+        });
+
+//        Client client = new Client();
+//        client.start();
+
+//        try (Socket socket = new Socket("localhost", 8080);
+//             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+//             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+//            ReadThread readThread = new ReadThread(in);
+//            WriteThread writeThread = new WriteThread(out);
+//            ExecutorService service = Executors.newCachedThreadPool();
+//            service.execute(readThread);
+//            service.execute(writeThread);
+////            String string, password;
+////            string = scanner.nextLine();
+////            password = scanner.nextLine();
+//////                System.out.println(string);
+////            out.println("<command name=\"login\"><name>" + string + "</name><password>" + password + "</password></command>");
+////            out.flush();
+////            System.out.println("output str: " + in.readLine());
+////            while (true) {
+////                string = scanner.nextLine();
+//////                System.out.println(string);
+////                out.println("<command name=\"message\"><message>" + string + "</message></command>");
+////                System.out.println("output str: " + in.readLine());
+////            }
+//
+//        }
+    }
+    public static void main(String[] args) {
+        launch();
+    }
+}
