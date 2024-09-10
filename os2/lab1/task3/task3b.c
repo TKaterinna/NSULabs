@@ -18,7 +18,7 @@ typedef struct {
 
 void *mythread(void *arg) {
     arg_st *my_arg = (arg_st *)arg;
-	printf("mythread [%d %ld]: id = %d, message = %s\n", gettid(), pthread_self(), my_arg->id, my_arg->message);
+    printf("mythread [%d %ld]: id = %d, message = %s\n", gettid(), pthread_self(), my_arg->id, my_arg->message);
 
     free(my_arg->message);
     free(my_arg);
@@ -29,6 +29,7 @@ void *mythread(void *arg) {
 int main() {
 	pthread_t tid;
 	int err;
+    pthread_attr_t attr;
 
 	printf("main [%d %d %d]: Hello from main!\n", getpid(), getppid(), gettid());
 
@@ -38,26 +39,30 @@ int main() {
     thread_arg->id = 1;
     thread_arg->message = message;
 
-    // arg_st thread_arg;
-    // thread_arg.id = 1;
-    // char *message = hello_str;
-    // thread_arg.message = message;
+    err = pthread_attr_init(&attr);
+    if (err) {
+        printf("main: pthread_attr_init() failed: %s\n", strerror(err));
+        return PROG_FAILED;
+    }
 
-    err = pthread_create(&tid, NULL, mythread, (void *)thread_arg);
-    // err = pthread_create(&tid, NULL, mythread, (void *)&thread_arg);
+    err = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+    if (err) {
+        printf("main: pthread_attr_setdetachstate() failed: %s\n", strerror(err));
+        return PROG_FAILED;
+    }
+
+    err = pthread_create(&tid, &attr, mythread, (void *)thread_arg);
     if (err) {
         printf("main: pthread_create() failed: %s\n", strerror(err));
         return PROG_FAILED;
     }
 
-    err = pthread_join(tid, NULL);
+    err = pthread_attr_destroy(&attr);
     if (err) {
-		printf("main: pthread_join() failed: %s\n", strerror(err));
-		return PROG_FAILED;
-	}
+        printf("main: pthread_attr_destroy() failed: %s\n", strerror(err));
+        return PROG_FAILED;
+    }
 
-    // free(thread_arg);
-    // free(message);
-
-	return PROG_SUCCESS;
+    pthread_exit(PROG_SUCCESS);
+	// return PROG_SUCCESS;
 }
