@@ -15,7 +15,6 @@
 
 #define PORT 1234
 #define MC_ADDR "224.0.0.5"
-#define BUFF_SIZE 1
 #define SEND_TIMEOUT 3
 #define RECV_TIMEOUT 1
 #define CONNECTION_TIMEOUT SEND_TIMEOUT * 2
@@ -132,8 +131,6 @@ int main(void) {
     struct sockaddr_in sockaddr_send, sockaddr_copy;
     socklen_t sockaddr_copy_len = sizeof(sockaddr_copy);
     struct timespec lastsend_time, lastrecv_time;
-    char buff[BUFF_SIZE];
-    memset(buff, 0, BUFF_SIZE);
     std::map<struct sockaddr_in, struct timespec, sockaddr_in_comparator> copies;
     std::vector<struct sockaddr_in> disconnected_addrs;
 
@@ -150,7 +147,7 @@ int main(void) {
     clock_gettime(CLOCK_MONOTONIC, &lastsend_time);
 
     while (1) {
-		err = recvfrom(sock_recv, buff, BUFF_SIZE, 0, (struct sockaddr*) &sockaddr_copy, &sockaddr_copy_len);
+        err = recvfrom(sock_recv, NULL, 0, 0, (struct sockaddr*) &sockaddr_copy, &sockaddr_copy_len);
         if (err != FUNC_ERROR) {
             clock_gettime(CLOCK_MONOTONIC, &lastrecv_time);
             if (copies.count(sockaddr_copy) == 0) {
@@ -161,7 +158,7 @@ int main(void) {
 		}
 
         if (expired(&lastsend_time, SEND_TIMEOUT)) {
-            err = sendto(sock_send, buff, BUFF_SIZE, 0, (struct sockaddr*) &sockaddr_send, sizeof(sockaddr_send));
+            err = sendto(sock_send, NULL, 0, 0, (struct sockaddr*) &sockaddr_send, sizeof(sockaddr_send));
             if (err == FUNC_ERROR) {
                 printf("sendto error\n");
                 close(sock_recv);
