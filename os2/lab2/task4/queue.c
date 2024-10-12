@@ -255,6 +255,7 @@
 	}
 
 	int queue_get(queue_t *q, int *val) {
+		// mutex_unlock(&mutex);
 		mutex_lock(&mutex);
 
 		q->get_attempts++;

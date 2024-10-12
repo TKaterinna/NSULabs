@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "*.nm": "plaintext",
+        "*.tcc": "cpp",
+        "vector": "cpp",
+        "functional": "cpp",
+        "random": "cpp",
+        "ostream": "cpp",
+        "iostream": "cpp",
+        "unistd.h": "c"
+    }
+}

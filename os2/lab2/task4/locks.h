@@ -1,3 +1,4 @@
+#define GNU_SOURCE
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdatomic.h>
@@ -22,6 +23,7 @@ typedef struct {
 
 typedef struct {
     int lock;
+    pid_t owner;
 } mutex_t;
 
 void spinlock_init(spinlock_t *s);
@@ -30,4 +32,4 @@ void spinlock_unlock(spinlock_t *s);
 
 void mutex_init(mutex_t *m);
 void mutex_lock(mutex_t *m);
-void mutex_unlock(mutex_t *m);
+int mutex_unlock(mutex_t *m);

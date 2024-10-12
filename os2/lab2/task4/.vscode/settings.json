@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.nm": "plaintext",
+        "time.h": "c",
+        "stdlib.h": "c",
+        "stdatomic.h": "c"
+    }
+}
