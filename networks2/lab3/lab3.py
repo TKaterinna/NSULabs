@@ -68,7 +68,16 @@ async def main():
     selected_location = locations[choice]
     lat, lon = selected_location['point']['lat'], selected_location['point']['lng']
     
-    weather = await fetch_weather(lat, lon)
+    wthr_plc = await asyncio.gather(fetch_weather(lat, lon), fetch_interesting_places(lat, lon))
+    weather = wthr_plc[0]
+    places = wthr_plc[1]
+    
+    place_descriptions = []
+    if len(places) == 0:
+        print("Интересные места не найдены")
+    else:
+        place_descriptions = await asyncio.gather(*[fetch_place_description(place['properties']['xid']) for place in places])
+
     wthr: str = str()
     if weather.get('weather'):
         if len(weather['weather']) > 0:
@@ -78,15 +87,9 @@ async def main():
         if weather['main'].get('temp'):
             wthr += f"temp = {weather['main']['temp']}   "
     print(f"Погода в {selected_location['name']}: {wthr}")
-    
-    places = await fetch_interesting_places(lat, lon)
-    if len(places) == 0:
-        print("Интересные места не найдены")
-        return
-    
-    place_descriptions = await asyncio.gather(*[fetch_place_description(place['properties']['xid']) for place in places])
 
-    print("Интересные места:")
+    if len(places):
+        print("Интересные места:")
     for i in range(len(places)):
         place = places[i]
         plc: str = str()
