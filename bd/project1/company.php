@@ -238,7 +238,7 @@
 
                 $sql = "SELECT Person_id, Last_name, First_name, Middle_name, Positions.Name
                         FROM People
-                        INNER JOIN Positions USING (Position_id)
+                        LEFT JOIN Positions USING (Position_id)
                         WHERE Company_id = :companyID";
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(':companyID', $companyID, PDO::PARAM_INT);
@@ -277,10 +277,6 @@
             select.appendChild(newOption);
 
             <?php
-                $DB_HOST = 'localhost';
-                $DB_NAME = 'katerina';
-                $DB_USER = 'root';
-                $DB_PASSWORD = 'root';
                 $pdo = new PDO("mysql:host=" . $DB_HOST . "; dbname=" . $DB_NAME, $DB_USER, $DB_PASSWORD);
                 if (!$pdo) {
                     echo 'error';
