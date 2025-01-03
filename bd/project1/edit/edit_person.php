@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <head>
     <meta charset='utf-8'>
@@ -6,7 +9,6 @@
 <body>
     <?php
         $personID = $_GET['Person_id'];
-        session_start();
         if (!isset($_SESSION['Host'])) {
             $_SESSION['Host'] = 'localhost';
         }

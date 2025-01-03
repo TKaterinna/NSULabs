@@ -1,11 +1,13 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <head>
     <meta charset='utf-8'>
 </head>
 <title>Home page</title>
 <body>
-    <?php 
-        session_start();
+    <?php
         if (!isset($_SESSION['Host'])) {
             $_SESSION['Host'] = 'localhost';
         }

@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <!DOCTYPE html>
 <head>
     <meta charset='utf-8'>
@@ -12,7 +15,7 @@
     <a href="../index.php"> Home page </a><br>
 
     <?php
-        session_start();
+        // session_start();
         if (!isset($_SESSION['Host'])) {
             $_SESSION['Host'] = 'localhost';
         }

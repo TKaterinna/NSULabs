@@ -80,7 +80,8 @@ func handleClient(clientConn *net.TCPConn) {
 	}
 
     authBuf := make([]byte, nauthBuf[0])
-    _, err = clientConn.Read(authBuf)
+	_, err = io.ReadFull(clientConn, authBuf)
+    // _, err = clientConn.Read(authBuf)
     if err != nil {
 		log.Printf("Failed to read handshake: %v", err)
 		return
@@ -211,14 +212,16 @@ func sendAfterConnection(conn net.Conn, status byte) {
 
 func getIPv4(conn net.Conn) ([]byte, uint16, error) {
     ipBuf := make([]byte, 4)
-	_, err := conn.Read(ipBuf)
+	_, err := io.ReadFull(conn, ipBuf)
+	// _, err := conn.Read(ipBuf)
     if err != nil {
 		log.Printf("Failed to read ip: %v", err)
 		return nil, 0, err
 	}
 
     portBuf := make([]byte, 2)
-    _, err = conn.Read(portBuf)
+	_, err = io.ReadFull(conn, portBuf)
+    // _, err = conn.Read(portBuf)
     if err != nil {
 		log.Printf("Failed to read port: %v", err)
 		return nil, 0, err
@@ -237,7 +240,8 @@ func getDomain(conn net.Conn) (string, uint16, error) {
 	}
 
     domainBuf := make([]byte, lenBuf[0])
-    _, err = conn.Read(domainBuf)
+	_, err = io.ReadFull(conn, domainBuf)
+    // _, err = conn.Read(domainBuf)
     if err != nil {
 		log.Printf("Failed to read domain: %v", err)
 		return "", 0, err
@@ -245,7 +249,8 @@ func getDomain(conn net.Conn) (string, uint16, error) {
     domain := string(domainBuf)
 
     portBuf := make([]byte, 2)
-    _, err = conn.Read(portBuf)
+	_, err = io.ReadFull(conn, portBuf)
+    // _, err = conn.Read(portBuf)
     if err != nil {
 		log.Printf("Failed to read port: %v", err)
 		return "", 0, err
